@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://venkateswara-sahu.vercel.app"),
   title: "Venkateswara Sahu | AI & MLOps Systems Engineer",
   description: "Engineering autonomous AI systems, zero-label drift monitoring, and high-scale ML. B.Tech (Hons.) in CSE (Data Science & Data Engineering) @ LPU (CGPA 8.38). Creator of 'vigil-drift' on PyPI.",
   keywords: [
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Venkateswara Sahu | AI & MLOps Systems Engineer",
     description: "Engineering autonomous AI systems, zero-label drift monitoring, and high-scale ML.",
-    url: "https://github.com/Venkateswara-Sahu",
+    url: "https://venkateswara-sahu.vercel.app",
     siteName: "Venkateswara Sahu Portfolio",
     locale: "en_US",
     type: "website",
