@@ -1,27 +1,59 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { FileText, Menu, X } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 import { PORTFOLIO_DATA } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
 export function Navbar({ onOpenResume }: { onOpenResume: () => void }) {
-  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      // If user is at or near the top, nothing glows (clean default state)
+      if (window.scrollY < 300) {
+        setActiveSection("");
+        return;
+      }
+
+      const sections = ["work", "stack", "experience", "resumes", "contact"];
+      const scrollPos = window.scrollY + 220; // 220px offset for natural viewing trigger
+
+      let current = "";
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            current = id;
+            break;
+          }
+        }
+      }
+
+      // If scrolled to bottom of document, activate contact
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60) {
+        current = "contact";
+      }
+
+      setActiveSection(current);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { name: "Work", href: "#work" },
-    { name: "Capabilities", href: "#stack" },
-    { name: "Journey", href: "#experience" },
-    { name: "Resumes", href: "#resumes" },
-    { name: "Contact", href: "#contact" },
+    { name: "Work", href: "#work", id: "work" },
+    { name: "Capabilities", href: "#stack", id: "stack" },
+    { name: "Journey", href: "#experience", id: "experience" },
+    { name: "Resumes", href: "#resumes", id: "resumes" },
+    { name: "Contact", href: "#contact", id: "contact" },
   ];
 
   const handleBrandClick = (e: React.MouseEvent) => {
@@ -47,17 +79,25 @@ export function Navbar({ onOpenResume }: { onOpenResume: () => void }) {
           </span>
         </button>
 
-        {/* Desktop Nav */}
+        {/* Desktop Nav with Real-Time Active Section Glow */}
         <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="px-3.5 py-1 text-xs text-neutral-400 hover:text-white transition-colors rounded-full hover:bg-white/5"
-            >
-              {link.name}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.id;
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                className={cn(
+                  "relative px-3.5 py-1 text-xs transition-all rounded-full cursor-pointer select-none",
+                  isActive
+                    ? "text-white font-semibold bg-white/12 border border-white/20 shadow-[0_0_16px_rgba(255,255,255,0.15)] scale-102"
+                    : "text-neutral-400 hover:text-white hover:bg-white/5 border border-transparent"
+                )}
+              >
+                {link.name}
+              </a>
+            );
+          })}
         </nav>
 
         {/* Right Action */}
@@ -100,25 +140,33 @@ export function Navbar({ onOpenResume }: { onOpenResume: () => void }) {
         </div>
       </div>
 
-      {/* Mobile Nav Dropdown */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden max-w-sm mx-auto mt-2 p-4 rounded-2xl bg-neutral-950/95 border border-white/10 backdrop-blur-2xl shadow-2xl flex flex-col gap-2 pointer-events-auto">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 text-sm text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-            >
-              {link.name}
-            </a>
-          ))}
-          <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs text-neutral-400">
-            <Link href={PORTFOLIO_DATA.personal.github} target="_blank" className="hover:text-white">GitHub ↗</Link>
-            <Link href={PORTFOLIO_DATA.personal.linkedin} target="_blank" className="hover:text-white">LinkedIn ↗</Link>
-            <Link href={`mailto:${PORTFOLIO_DATA.personal.email}`} className="hover:text-white">Email ↗</Link>
-          </div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="md:hidden mt-2 p-4 rounded-3xl bg-neutral-950/95 border border-white/10 backdrop-blur-2xl pointer-events-auto space-y-2 max-w-sm mx-auto shadow-2xl"
+        >
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.id;
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "block px-4 py-2.5 rounded-2xl text-xs transition-colors",
+                  isActive
+                    ? "bg-white/15 text-white font-semibold border border-white/20"
+                    : "text-neutral-400 hover:text-white hover:bg-white/5"
+                )}
+              >
+                {link.name}
+              </a>
+            );
+          })}
+        </motion.div>
       )}
     </header>
   );
