@@ -299,11 +299,11 @@ export const PORTFOLIO_DATA = {
       company: "TransOrg Analytics (Pickl.AI) × LPU",
       location: "Final Semester Industry Tie-Up",
       description: [
-        "Completed final-semester industry internship program in Generative AI, demonstrating practical proficiency across applied GenAI projects.",
-        "Researched, developed, and benchmarked context-aware RAG pipelines and prompt engineering architectures.",
-        "Collaborated on packaging and containerizing experimental ML models into modular REST APIs.",
+        "Architected F1InsightAI, an enterprise Text-to-SQL RAG system querying 700,000+ records across 14 relational tables on TiDB Cloud.",
+        "Engineered 9-node LangGraph autonomous state graph with FAISS schema RAG and self-correcting retry loops, achieving 83.3% first-pass SQL execution accuracy.",
+        "Delivered production-grade evaluation telemetry (5.5x MRR lift: 0.12 ➔ 0.67) and packaged modular REST inference endpoints.",
       ],
-      tags: ["Generative AI", "TransOrg Analytics", "Pickl.AI", "RAG Pipelines", "LLMs"],
+      tags: ["F1InsightAI", "LangGraph", "TiDB Cloud", "83.3% Accuracy", "5.5x MRR Lift", "TransOrg Analytics"],
       badge: "Industry Internship",
     },
     {
