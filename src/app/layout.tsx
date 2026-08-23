@@ -22,11 +22,25 @@ export const metadata: Metadata = {
   authors: [{ name: "Venkateswara Sahu", url: "https://github.com/Venkateswara-Sahu" }],
   openGraph: {
     title: "Venkateswara Sahu | AI & MLOps Systems Engineer",
-    description: "Engineering autonomous AI systems, zero-label drift monitoring, and high-scale ML.",
+    description: "Engineering autonomous AI systems, zero-label drift monitoring, and high-scale ML. Creator of 'vigil-drift' on PyPI.",
     url: "https://venkateswara-sahu.vercel.app",
     siteName: "Venkateswara Sahu Portfolio",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Venkateswara Sahu — AI & MLOps Systems Engineer",
+      },
+    ],
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Venkateswara Sahu | AI & MLOps Systems Engineer",
+    description: "Engineering autonomous AI systems, zero-label drift monitoring, and high-scale ML. Creator of 'vigil-drift' on PyPI.",
+    images: ["/opengraph-image"],
   },
 };
 
