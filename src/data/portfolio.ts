@@ -287,7 +287,7 @@ export const PORTFOLIO_DATA = {
       location: "Open Source · PyPI",
       description: [
         "Architected and published `vigil-drift` on PyPI for zero-label unsupervised concept drift monitoring in real-time streaming data.",
-        "Built Dual Autoencoder architecture ($A / A_{KC}$) with replicated T-tests and a novel `DriftAttributor` for feature-level drift attribution.",
+        "Built Dual Autoencoder architecture (Adaptive and Frozen Mirror) with replicated T-tests, delivering 93.3% precision on NSL-KDD and feature-level attribution.",
         "Engineered stream-native Kafka consumer, FastAPI service, and Airflow auto-retrain DAG with quality gates and 81% test coverage.",
       ],
       tags: ["PyTorch", "vigil-drift", "Kafka", "Airflow", "FastAPI", "MLflow", "PyPI"],
