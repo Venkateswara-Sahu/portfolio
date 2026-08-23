@@ -30,15 +30,22 @@ graph.add_node("reflect", self_correcting_retry_loop)`,
     },
     vigil: {
       architecture: [
-        "Dual Autoencoder Design: Adaptive A trained online vs Frozen Mirror A_KC capturing baseline nominal distributions.",
-        "Novel DriftAttributor: computes per-feature reconstruction error delta Δ(A, A_KC) to pinpoint drifting signals.",
-        "Kafka stream-native consumer with chunked micro-batch processing & Airflow retrain DAG webhook.",
+        "Evaluated on NSL-KDD Benchmark: 93.3% precision, 100% novel-class recall, and 1-chunk detection delay (200 samples).",
+        "Dual Autoencoder Design (arXiv:2605.29834): Adaptive A trained online vs Frozen Mirror A_KC capturing nominal baseline distributions.",
+        "Novel DriftAttributor: computes per-feature reconstruction error delta Δ(A, A_KC) to pinpoint root causes (e.g. root_shell 14.7%, service_telnet 9.3%).",
+        "Full-Stack MLOps: Kafka streaming pipeline, FastAPI REST microservice, MLflow experiment tracking, and Airflow auto-retraining DAG.",
       ],
-      snippet: `# vigil-drift PyPI core detection loop
-attributor = DriftAttributor(adaptive_ae, frozen_ae)
-drift_delta = attributor.compute_feature_delta(stream_batch)
-if t_test_p_value < 0.01:
-    trigger_airflow_retraining_dag(run_id, drift_delta)`,
+      snippet: `# vigil-drift PyPI core detection & attribution loop
+v = Vigil(feature_names=feature_cols, top_k_features=5)
+v.fit(baseline_traffic) # Unsupervised 1,000 baseline samples
+
+for chunk in stream:
+    result = v.detect(chunk)
+    if result.drift_detected:
+        # 93.3% Precision | 1-chunk delay | 100% Novelty Recall
+        print(f"Drift Severity: {result.drift_severity:.2f}")
+        for feat in result.attribution.top_features:
+            print(f" → {feat['feature_name']}: {feat['contribution']:.1%}")`,
     },
     "pid-mto": {
       architecture: [
@@ -205,22 +212,26 @@ best_model.fit(X_train, y_train) # AUC: 0.9067`,
               Vigil (`vigil-drift`) — Zero-Label Streaming Concept Drift Detection
             </h3>
             <p className="text-sm sm:text-base text-neutral-400 leading-relaxed max-w-3xl mb-8">
-              An open-source Python library published to PyPI for autonomous drift detection in live Kafka streaming data. Uses Dual Autoencoders (Adaptive A and Frozen A_KC), replicated T-tests, and a novel DriftAttributor to compute feature-level reconstruction error deltas without requiring delayed ground-truth labels.
+              An open-source Python library published to PyPI for unsupervised drift detection and root-cause attribution on live streaming data. Evaluated on the NSL-KDD network intrusion benchmark, delivering 93.3% precision, 100% novel attack class detection recall, and a 1-chunk detection delay without ground-truth labels.
             </p>
 
-            {/* Metrics */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 p-4 rounded-2xl bg-black border border-white/[0.06] mb-8 font-mono">
+            {/* Real Benchmark Metrics */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-2xl bg-black border border-white/[0.06] mb-8 font-mono">
               <div>
-                <div className="text-xl font-bold text-white">81%</div>
-                <div className="text-[11px] text-neutral-500">Automated GitHub Actions CI coverage</div>
+                <div className="text-xl font-bold text-white">93.3%</div>
+                <div className="text-[11px] text-neutral-500">Drift detection precision (NSL-KDD)</div>
               </div>
               <div>
-                <div className="text-xl font-bold text-white">&lt;15ms</div>
-                <div className="text-[11px] text-neutral-500">Streaming packet inference latency</div>
+                <div className="text-xl font-bold text-white">100%</div>
+                <div className="text-[11px] text-neutral-500">Novel class detection recall</div>
               </div>
               <div>
-                <div className="text-xl font-bold text-white">Airflow DAG</div>
-                <div className="text-[11px] text-neutral-500">Auto-retraining webhook trigger</div>
+                <div className="text-xl font-bold text-white">1 Chunk</div>
+                <div className="text-[11px] text-neutral-500">Detection delay (200 packets)</div>
+              </div>
+              <div>
+                <div className="text-xl font-bold text-white">81% CI</div>
+                <div className="text-[11px] text-neutral-500">Automated GitHub Actions coverage</div>
               </div>
             </div>
 
@@ -236,7 +247,7 @@ best_model.fit(X_train, y_train) # AUC: 0.9067`,
                 >
                   <div className="text-xs font-mono text-neutral-300 font-semibold uppercase tracking-wider flex items-center gap-2">
                     <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-                    Dual Autoencoder & Streaming Pipeline
+                    Dual Autoencoder & NSL-KDD Benchmark Suite
                   </div>
                   <ul className="space-y-2 text-xs text-neutral-300">
                     {projectDetails.vigil.architecture.map((arch, aIdx) => (
@@ -247,7 +258,7 @@ best_model.fit(X_train, y_train) # AUC: 0.9067`,
                     ))}
                   </ul>
                   <div className="pt-2">
-                    <span className="text-[11px] font-mono text-neutral-500 uppercase block mb-1">Core Detection Routine:</span>
+                    <span className="text-[11px] font-mono text-neutral-500 uppercase block mb-1">Core Detection & Attribution Routine:</span>
                     <pre className="p-3 rounded-xl bg-neutral-950 border border-white/5 font-mono text-xs text-cyan-300 overflow-x-auto">
                       {projectDetails.vigil.snippet}
                     </pre>
