@@ -1,5 +1,27 @@
 import type { Metadata } from "next";
+import { IBM_Plex_Mono, Instrument_Serif, Manrope } from "next/font/google";
+
+import { ContactFooter } from "@/components/editorial/ContactFooter";
+import { EditorialNav } from "@/components/editorial/EditorialNav";
+
 import "./globals.css";
+
+const sans = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+});
+
+const serif = Instrument_Serif({
+  subsets: ["latin"],
+  variable: "--font-instrument-serif",
+  weight: "400",
+});
+
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-ibm-plex-mono",
+  weight: ["400", "500"],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://venkateswara-sahu.vercel.app"),
@@ -50,9 +72,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
-      <body className="bg-black text-slate-100 min-h-screen selection:bg-white selection:text-black antialiased font-sans">
+    <html
+      lang="en"
+      className={`${sans.variable} ${serif.variable} ${mono.variable}`}
+    >
+      <body id="top">
+        <EditorialNav />
         {children}
+        <ContactFooter />
       </body>
     </html>
   );
