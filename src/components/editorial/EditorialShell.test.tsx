@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
@@ -7,6 +10,11 @@ import { EditorialNav } from "./EditorialNav";
 const expectVisibleFocusTreatment = (element: HTMLElement) => {
   expect(element.className).toMatch(/focus-visible:/);
 };
+
+const globalStyles = readFileSync(
+  resolve(process.cwd(), "src/app/globals.css"),
+  "utf8",
+);
 
 describe("editorial shell", () => {
   it("renders a labelled navigation landmark with the primary actions", () => {
@@ -50,5 +58,20 @@ describe("editorial shell", () => {
     );
     expectVisibleFocusTreatment(email);
     expectVisibleFocusTreatment(linkedin);
+  });
+
+  it("keeps the anchor color reset in Tailwind's base layer", () => {
+    expect(globalStyles).toMatch(
+      /@layer base\s*{\s*a\s*{[^}]*color:\s*inherit;[^}]*}\s*}/,
+    );
+  });
+
+  it("uses the accessible footer-muted token for the small colophon", () => {
+    expect(globalStyles).toContain(
+      "--color-editorial-footer-muted: #938d82;",
+    );
+    expect(globalStyles).toMatch(
+      /\.contact-footer__colophon\s*{[^}]*color:\s*var\(--color-editorial-footer-muted\);/,
+    );
   });
 });
