@@ -1,335 +1,401 @@
-export interface Project {
-  id: string;
-  title: string;
-  subtitle: string;
-  tagline: string;
-  description: string;
-  badge: string;
-  category: "GenAI & Agentic" | "MLOps & Systems" | "Computer Vision" | "Predictive ML";
-  metrics: { label: string; value: string; detail: string }[];
-  techStack: string[];
-  features: string[];
-  links: {
-    github: string;
-    demo?: string;
-    docs?: string;
-    pypi?: string;
-  };
-  featured: boolean;
-  highlightColor: string;
+export interface PortfolioLink {
+  label: string;
+  href: string;
+  external?: boolean;
 }
 
-export interface SkillCategory {
-  title: string;
-  iconName: string;
-  skills: { name: string; level: string; icon?: string }[];
+export interface MetricEvidence {
+  label: string;
+  value: string;
+  context: string;
+  evidenceHref: string;
 }
 
-export interface Milestone {
-  year: string;
-  role: string;
-  company: string;
-  location: string;
-  description: string[];
-  tags: string[];
-  badge?: string;
-}
-
-export interface ResumeTrack {
-  id: string;
-  title: string;
-  icon: string;
+export interface ProjectEvaluation {
   summary: string;
-  highlightProjects: string[];
-  primaryKeywords: string[];
-  file: string;
+  metrics: MetricEvidence[];
 }
 
-export const PORTFOLIO_DATA = {
-  personal: {
+export type ProjectVisual = "vigil" | "f1" | "pid" | "ctr";
+
+export interface ProjectCaseStudy {
+  id: string;
+  number: string;
+  title: string;
+  discipline: string;
+  period: string;
+  summary: string;
+  problem: string;
+  contribution: string;
+  architecture: string[];
+  evaluation: ProjectEvaluation;
+  limitations: string;
+  stack: string[];
+  links: PortfolioLink[];
+  presentation: "primary" | "supporting";
+  visual: ProjectVisual;
+}
+
+export interface BackgroundEntry {
+  period: string;
+  title: string;
+  organization: string;
+  detail: string;
+  links?: PortfolioLink[];
+}
+
+export interface PortfolioContent {
+  identity: {
+    name: string;
+    role: string;
+    displayPhrase: string;
+    statement: string;
+    location: string;
+    availability: string;
+    actions: PortfolioLink[];
+  };
+  navigation: PortfolioLink[];
+  projects: ProjectCaseStudy[];
+  background: BackgroundEntry[];
+  contact: {
+    heading: string;
+    note: string;
+    email: string;
+    location: string;
+    availability: string;
+    links: PortfolioLink[];
+  };
+}
+
+const links = {
+  resume: "/resumes/Venkateswara_Sahu_Applied_AI_Resume.pdf",
+  github: "https://github.com/Venkateswara-Sahu",
+  linkedin: "https://www.linkedin.com/in/venkateswara-sahu/",
+  huggingFace: "https://huggingface.co/RiverStead",
+  vigilRepository: "https://github.com/Venkateswara-Sahu/OWADD",
+  vigilDocs: "https://venkateswara-sahu.github.io/OWADD/",
+  vigilPackage: "https://pypi.org/project/vigil-drift/",
+  f1Repository:
+    "https://github.com/Venkateswara-Sahu/AI_Powered_Text-to-SQL_RAG_Chatbot",
+  f1Demo: "https://huggingface.co/spaces/RiverStead/Text-to-SQL_RAG_Chatbot",
+  pidRepository:
+    "https://github.com/Venkateswara-Sahu/P-ID-Processing-MTO-Extraction-System",
+  ctrRepository:
+    "https://github.com/Venkateswara-Sahu/CTR_Predictor_and_Scorer",
+  ctrDemo: "https://ctrpredictor.streamlit.app/",
+} as const;
+
+export const portfolioContent: PortfolioContent = {
+  identity: {
     name: "Venkateswara Sahu",
-    role: "Generative AI & MLOps Engineer",
-    tagline: "Engineering Production-Grade Agentic Workflows, Zero-Label Drift Detection & High-Throughput ML Systems",
-    bio: "B.Tech (Hons.) in CSE (Data Science & Data Engineering) graduate at Lovely Professional University (CGPA 8.38). Creator of 'vigil-drift' on PyPI, author of 9-node LangGraph self-correcting RAG systems, and recipient of university startup seed funding.",
-    locations: ["Bengaluru", "Hyderabad", "Gurugram", "Remote"],
-    status: "Actively interviewing for full-time roles",
-    email: "venkateswarsahu000@gmail.com",
-    github: "https://github.com/Venkateswara-Sahu",
-    linkedin: "https://www.linkedin.com/in/venkateswara-sahu/",
-    huggingface: "https://huggingface.co/RiverStead",
-    vigilDocs: "https://venkateswara-sahu.github.io/OWADD/",
+    role: "Applied AI & Machine Learning Engineer",
+    displayPhrase: "Make it measurable.",
+    statement:
+      "I build evaluated AI systems—from concept-drift monitoring to Text-to-SQL agents—with evidence you can inspect.",
+    location: "Yanam, Andhra Pradesh, India",
+    availability: "Open to full-time roles and relocation",
+    actions: [
+      { label: "Resume", href: links.resume },
+      { label: "GitHub", href: links.github, external: true },
+    ],
   },
-
-  metrics: [
-    { label: "TiDB Records Indexed", value: 700000, suffix: "+", detail: "Formula 1 1950–2024 database" },
-    { label: "OCR Pipeline Speedup", value: 50, suffix: "x", detail: "~7s vs 360s baseline via CC-OCR" },
-    { label: "Criteo Ad Interactions", value: 10, suffix: "M+", detail: "XGBoost/LightGBM AUC 0.9067" },
-    { label: "Startup Seed Fund Won", value: 100, suffix: "k", prefix: "₹", detail: "Competitive AI startup award" },
-    { label: "Published PyPI Package", value: 81, suffix: "%", detail: "CI Test Coverage for vigil-drift" },
+  navigation: [
+    { label: "Work", href: "#work" },
+    { label: "Case studies", href: "#case-studies" },
+    { label: "About", href: "#about" },
+    { label: "Resume", href: links.resume },
+    { label: "GitHub", href: links.github, external: true },
+    { label: "Contact", href: "#contact" },
   ],
-
-  resumeTracks: [
-    {
-      id: "genai",
-      title: "Generative AI & Agentic Systems",
-      icon: "Bot",
-      summary: "Specialized in LangGraph multi-node state graphs, schema RAG, tool calling, reflection loops, Groq/Llama/GPT OSS inference, and vector databases (FAISS, TiDB Cloud).",
-      highlightProjects: ["F1InsightAI (Text-to-SQL)", "P&ID Graph Validator", "IntelliResearch"],
-      primaryKeywords: ["LangGraph", "LangChain", "RAG", "FAISS", "Groq API", "Llama 3.3", "TiDB", "Prompt Engineering"],
-      file: "/resumes/Venkateswara_Sahu_GenAI_Engineer.pdf",
-    },
-    {
-      id: "mlops",
-      title: "MLOps & Streaming Data Engineering",
-      icon: "Cpu",
-      summary: "Specialized in real-time streaming architectures, zero-label concept drift monitoring, automated Airflow DAG retraining with quality gates, Kafka, MLflow, and Docker CI/CD.",
-      highlightProjects: ["Vigil (vigil-drift PyPI)", "Airline Data Warehouse", "Banking API Suite"],
-      primaryKeywords: ["Apache Kafka", "Airflow", "MLflow", "Docker", "PyPI", "FastAPI", "CI/CD", "Concept Drift"],
-      file: "/resumes/Venkateswara_Sahu_MLOps_Engineer.pdf",
-    },
-    {
-      id: "cv",
-      title: "Computer Vision & Document AI",
-      icon: "Eye",
-      summary: "Specialized in custom YOLOv8 symbol detection, Connected-Component guided OCR acceleration (50x), ISA-5.1 tag parsing, NetworkX spatial entity graphs, and CAD/P&ID extraction.",
-      highlightProjects: ["P&ID Document Intelligence & MTO System", "ComfyUI Pipeline"],
-      primaryKeywords: ["YOLOv8", "Tesseract OCR", "OpenCV", "NetworkX", "Image Processing", "ISA-5.1", "Spatial Graphs"],
-      file: "/resumes/Venkateswara_Sahu_CV_Engineer.pdf",
-    },
-    {
-      id: "ml",
-      title: "Predictive ML & Analytics",
-      icon: "TrendingUp",
-      summary: "Specialized in high-scale feature engineering (150+ features), gradient boosting (XGBoost, LightGBM, Optuna), sub-second inference APIs, and +265% decile CTR lift.",
-      highlightProjects: ["10M+ Display Ad CTR Predictor & Scorer", "Diabetes Prediction CI/CD"],
-      primaryKeywords: ["XGBoost", "LightGBM", "Optuna", "Scikit-Learn", "Feature Engineering", "Flask REST", "Streamlit"],
-      file: "/resumes/Venkateswara_Sahu_ML_Engineer.pdf",
-    },
-  ] as ResumeTrack[],
-
   projects: [
     {
-      id: "f1insightai",
-      title: "F1InsightAI",
-      subtitle: "Agentic Text-to-SQL RAG Chatbot",
-      tagline: "Natural language to SQL over 700k+ TiDB Cloud records with 9-node LangGraph self-correcting agent and live RAG telemetry.",
-      description: "An enterprise RAG system that translates complex natural language queries into executable SQL over a multi-table Formula 1 database (1950–2024). Features an autonomous reflection loop that catches syntax or schema errors and repairs SQL queries on the fly.",
-      badge: "Flagship Agentic AI",
-      category: "GenAI & Agentic",
-      metrics: [
-        { label: "MRR Improvement", value: "5.5x", detail: "0.12 to 0.67 on schema search" },
-        { label: "First-Pass SQL Acc.", value: "83.3%", detail: "Over complex multi-table joins" },
-        { label: "Records Indexed", value: "700K+", detail: "14 relational tables on TiDB Cloud" },
-      ],
-      techStack: ["LangGraph", "Groq API", "GPT OSS 120B", "FAISS", "TiDB Cloud", "Flask", "Docker", "Chart.js"],
-      features: [
-        "9-node LangGraph state graph with reflection and automatic SQL retry loops",
-        "RAG sub-schema retrieval combining FAISS vector search and co-occurrence scoring",
-        "Live RAG metrics evaluation card: MRR, Recall@K, Context Relevance, and Faithfulness",
-        "Cinematic Kinetic Cockpit UI with Chart.js telemetry charts and AI follow-up suggestions",
-        "Strict read-only query sandboxing for database security",
-      ],
-      links: {
-        github: "https://github.com/Venkateswara-Sahu/AI_Powered_Text-to-SQL_RAG_Chatbot",
-        demo: "https://huggingface.co/spaces/RiverStead/Text-to-SQL_RAG_Chatbot",
-      },
-      featured: true,
-      highlightColor: "from-red-500/20 via-orange-500/10 to-transparent",
-    },
-    {
       id: "vigil",
-      title: "Vigil (vigil-drift)",
-      subtitle: "Zero-Label Unsupervised Concept Drift Detection",
-      tagline: "Published PyPI library for autonomous drift detection & root-cause feature attribution on live Kafka streams.",
-      description: "A production-grade drift detector designed for high-velocity streaming environments where ground-truth labels are delayed or absent. Employs dual autoencoders to decouple true concept drift from novel network attacks, coupled with a novel DriftAttributor.",
-      badge: "PyPI Package & Research",
-      category: "MLOps & Systems",
-      metrics: [
-        { label: "PyPI Package", value: "vigil-drift", detail: "pip install vigil-drift" },
-        { label: "Test Coverage", value: "81%", detail: "Full GitHub Actions CI/CD" },
-        { label: "Attribution Delta", value: "Feature-Level", detail: "Ranks top-K drifting signals" },
+      number: "01",
+      title: "Vigil",
+      discipline: "Concept drift · MLOps",
+      period: "Jun–Aug 2026",
+      summary:
+        "A published drift-monitoring package with feature-error rankings and reproducible baseline evaluation.",
+      problem:
+        "Live ML inputs can drift before labels arrive, leaving teams without a direct signal that a model's operating conditions have changed.",
+      contribution:
+        "Built and published vigil-drift with adaptive and frozen autoencoders, reconstruction-error tests, feature-level attribution, a Kafka consumer, a FastAPI service, and an Airflow retraining workflow.",
+      architecture: [
+        "Train a baseline on normal, unlabeled observations.",
+        "Compare adaptive and frozen autoencoder reconstruction signals.",
+        "Run replicated statistical tests and kernel-density novelty checks.",
+        "Rank feature-level reconstruction deltas when drift is detected.",
       ],
-      techStack: ["PyTorch", "Apache Kafka", "Apache Airflow", "MLflow", "FastAPI", "Docker", "Streamlit"],
-      features: [
-        "Dual Autoencoder Architecture (Adaptive A + Frozen Mirror A_KC with KDE density estimation)",
-        "Novel DriftAttributor: computes per-feature reconstruction error delta to pinpoint root causes",
-        "Stream-native Kafka consumer with chunked micro-batch processing",
-        "Airflow DAG webhook trigger with quality gates for autonomous model retraining",
-        "FastAPI REST endpoints (/fit and /detect) with SOC-style real-time dashboard",
-      ],
-      links: {
-        github: "https://github.com/Venkateswara-Sahu/OWADD",
-        docs: "https://venkateswara-sahu.github.io/OWADD/",
-        pypi: "https://pypi.org/project/vigil-drift/",
+      evaluation: {
+        summary:
+          "The final bounded attribution study compared nine rankings across synthetic shifts and controlled CICIDS2017 development data. Results did not establish general superiority.",
+        metrics: [
+          {
+            label: "Evaluation seeds",
+            value: "20",
+            context: "Final trained, untrained and input-control attribution study.",
+            evidenceHref: links.vigilRepository,
+          },
+          {
+            label: "Ranking methods",
+            value: "9",
+            context: "Reconstruction variants, input-change, KS and correlation baselines.",
+            evidenceHref: links.vigilRepository,
+          },
+          {
+            label: "Evaluation conditions",
+            value: "24",
+            context: "18 synthetic and 6 controlled real-data conditions; not attack detection.",
+            evidenceHref: links.vigilRepository,
+          },
+        ],
       },
-      featured: true,
-      highlightColor: "from-blue-500/20 via-cyan-500/10 to-transparent",
+      limitations:
+        "Training helped in some dependency conditions but did not consistently beat simple baselines. Controlled flow-feature injections are semi-synthetic, not causal explanations, held-out attack detection or production validation. No publication is claimed.",
+      stack: [
+        "Python",
+        "PyTorch",
+        "SciPy",
+        "Kafka",
+        "Airflow",
+        "MLflow",
+        "FastAPI",
+      ],
+      links: [
+        { label: "Repository", href: links.vigilRepository, external: true },
+        { label: "Documentation", href: links.vigilDocs, external: true },
+        { label: "PyPI package", href: links.vigilPackage, external: true },
+      ],
+      presentation: "primary",
+      visual: "vigil",
     },
     {
-      id: "pid-mto",
-      title: "P&ID Document Intelligence & MTO System",
-      subtitle: "Computer Vision & Graph-Based Extraction",
-      tagline: "End-to-end pipeline transforming complex engineering drawings into verified Material Take-Off spreadsheets in seconds.",
-      description: "Solves the engineering bottleneck in EPC workflows by combining fine-tuned YOLOv8 symbol detection with connected-component accelerated OCR, spatial proximity entity graphs in NetworkX, and LangGraph LLM validation.",
-      badge: "Computer Vision & Agents",
-      category: "Computer Vision",
-      metrics: [
-        { label: "OCR Speedup", value: "50x", detail: "~7s vs 360s baseline" },
-        { label: "Symbol Detection", value: "YOLOv8s", detail: "Valves, instruments & piping" },
-        { label: "Standards", value: "ISA-5.1", detail: "Automated tag & loop parsing" },
+      id: "f1insightai",
+      number: "02",
+      title: "F1InsightAI",
+      discipline: "Text-to-SQL · Retrieval",
+      period: "Jan–May 2026",
+      summary:
+        "An evaluated agent workflow for asking natural-language questions across Formula 1 data in TiDB Cloud.",
+      problem:
+        "A large relational schema can overwhelm a language model with irrelevant context and produce invalid or unsafe SQL.",
+      contribution:
+        "Led the technical implementation for the TransOrg Analytics (Pickl.AI) × LPU industry project, building the nine-node LangGraph workflow, schema retrieval, SQL validation, error-guided retry path, Flask API, and public demo.",
+      architecture: [
+        "Classify the question and retrieve a focused sub-schema with FAISS.",
+        "Generate read-only SQL from the retrieved tables and relationships.",
+        "Execute against 14 TiDB tables and reflect on execution errors.",
+        "Return the answer with SQL, results, and retrieval measurements visible.",
       ],
-      techStack: ["YOLOv8", "Tesseract OCR", "NetworkX", "LangGraph", "Groq (Llama 3.3 70B)", "FastAPI", "Streamlit"],
-      features: [
-        "Connected-Component guided OCR isolates text regions, eliminating pipe-line graphic noise",
-        "Spatial proximity engine builds NetworkX relationship graph for piping loops",
-        "3-node LangGraph validation agent powered by Groq Llama 3.3 70B",
-        "Automated professional Excel MTO generation with category confidence scores",
-        "Interactive Streamlit visualization dashboard + FastAPI ingestion endpoints",
-      ],
-      links: {
-        github: "https://github.com/Venkateswara-Sahu/P-ID-Processing-MTO-Extraction-System",
+      evaluation: {
+        summary:
+          "The recorded 20-question benchmark included 18 SQL-generating questions and three documented schema-retrieval iterations.",
+        metrics: [
+          {
+            label: "First-attempt SQL accuracy",
+            value: "83.3%",
+            context: "15 of 18 SQL-generating benchmark questions.",
+            evidenceHref: links.f1Repository,
+          },
+          {
+            label: "Schema-retrieval MRR",
+            value: "0.12 → 0.67",
+            context: "Average MRR across three recorded retrieval iterations.",
+            evidenceHref: links.f1Repository,
+          },
+          {
+            label: "Database scope",
+            value: "700,000+",
+            context: "Formula 1 records across 14 TiDB tables.",
+            evidenceHref: links.f1Repository,
+          },
+        ],
       },
-      featured: true,
-      highlightColor: "from-emerald-500/20 via-teal-500/10 to-transparent",
+      limitations:
+        "The recorded benchmark contained no retry cases, so it measures first-attempt behavior rather than recovery reliability. It is a bounded project evaluation, not evidence of service-scale performance.",
+      stack: [
+        "Python",
+        "LangGraph",
+        "FAISS",
+        "TiDB Cloud",
+        "Flask",
+        "Docker",
+      ],
+      links: [
+        { label: "Repository", href: links.f1Repository, external: true },
+        { label: "Live demo", href: links.f1Demo, external: true },
+      ],
+      presentation: "primary",
+      visual: "f1",
+    },
+    {
+      id: "pid-intelligence",
+      number: "03",
+      title: "P&ID Intelligence",
+      discipline: "Computer vision · Document AI",
+      period: "Jul 2026",
+      summary:
+        "A document-intelligence prototype that turns P&ID drawings into reviewable Material Take-Off records.",
+      problem:
+        "Engineering drawings combine symbols, dense labels, and connecting lines that make full-image OCR noisy and manual extraction slow.",
+      contribution:
+        "Combined YOLOv8 symbol detection, connected-component-guided OCR, spatial graph matching, rule-based checks, optional LangGraph validation, and spreadsheet output in one reviewable pipeline.",
+      architecture: [
+        "Preprocess and tile uploaded PDF or image drawings.",
+        "Detect symbols and isolate text-like connected components.",
+        "Associate symbols and tags in a NetworkX spatial graph.",
+        "Validate relationships and export reviewable MTO records.",
+      ],
+      evaluation: {
+        summary:
+          "A recorded project test compared the original full-image OCR path with connected-component-guided OCR on the project drawing setup.",
+        metrics: [
+          {
+            label: "OCR processing",
+            value: "~360s → 7s",
+            context:
+              "One project benchmark; timing varies by drawing size and hardware.",
+            evidenceHref: links.pidRepository,
+          },
+          {
+            label: "Validation path",
+            value: "6 rules",
+            context:
+              "Checks cover tag completeness, uniqueness, loops, confidence, orphan nodes, and valve connections.",
+            evidenceHref: links.pidRepository,
+          },
+        ],
+      },
+      limitations:
+        "This is a prototype that requires human review. Detection depends on the symbol style used for training, small labels remain difficult, and it has not been evaluated on a representative industrial drawing corpus.",
+      stack: [
+        "Python",
+        "YOLOv8",
+        "Tesseract OCR",
+        "NetworkX",
+        "LangGraph",
+        "FastAPI",
+        "Streamlit",
+      ],
+      links: [
+        { label: "Repository", href: links.pidRepository, external: true },
+      ],
+      presentation: "primary",
+      visual: "pid",
     },
     {
       id: "ctr-predictor",
-      title: "10M+ Display Ad CTR Predictor & Scorer",
-      subtitle: "Large-Scale Machine Learning Pipeline",
-      tagline: "Gradient boosting system trained on 10,000,000+ Criteo ads with 150 engineered interaction features and sub-0.5s API.",
-      description: "A production ad scoring and CTR forecasting platform designed for low-latency ad bidding. Combines extensive feature engineering over 39 categorical/numerical features with Optuna-tuned XGBoost and LightGBM ensembles.",
-      badge: "High-Throughput ML",
-      category: "Predictive ML",
-      metrics: [
-        { label: "Model AUC", value: "0.9067", detail: "Log Loss 0.3105 on test set" },
-        { label: "Top Decile Lift", value: "+265.6%", detail: "CTR improvement for top 10% ads" },
-        { label: "Inference Latency", value: "<0.5s", detail: "Flask REST service with 5 endpoints" },
+      number: "04",
+      title: "CTR Predictor",
+      discipline: "Tabular ML · Ranking",
+      period: "Sep–Nov 2025",
+      summary:
+        "An academic ML pipeline for training, comparing, and serving click-through-rate models on Criteo display-ad data.",
+      problem:
+        "Sparse numerical and categorical advertising inputs need consistent feature engineering, evaluation, and ranking before they can support useful scoring decisions.",
+      contribution:
+        "Engineered 150 model features from 39 raw fields, tuned XGBoost and LightGBM with Optuna, compared offline results, and exposed scoring through Flask and Streamlit interfaces.",
+      architecture: [
+        "Prepare 13 integer and 26 categorical input fields.",
+        "Generate 150 model features and tune two gradient-boosting models.",
+        "Compare offline AUC, log loss, and ranking lift.",
+        "Serve single and batch scoring through Flask and Streamlit.",
       ],
-      techStack: ["XGBoost", "LightGBM", "Optuna", "Flask", "Streamlit", "Pandas", "Scikit-Learn"],
-      features: [
-        "150 engineered interaction features from 39 raw sparse variables",
-        "Optuna Bayesian hyperparameter optimization across tree depth, learning rate, and regularizers",
-        "Multi-dimensional scoring engine evaluating device, placement, and time vectors",
-        "Production Flask REST API with 5 endpoints for single-ad and high-volume batch scoring",
-        "Streamlit analytics suite with model interpretability and what-if parameter simulation",
-      ],
-      links: {
-        github: "https://github.com/Venkateswara-Sahu/CTR_Predictor_and_Scorer",
-        demo: "https://ctrpredictor.streamlit.app/",
+      evaluation: {
+        summary:
+          "The recorded experiment used 10 million Criteo rows split into 7 million training, 1 million validation, and 2 million test observations.",
+        metrics: [
+          {
+            label: "XGBoost test AUC",
+            value: "0.9067",
+            context: "Compared with 0.9024 for LightGBM on the recorded split.",
+            evidenceHref: links.ctrRepository,
+          },
+          {
+            label: "Top-decile CTR lift",
+            value: "265.6%",
+            context: "Offline ranking analysis, not an online A/B test.",
+            evidenceHref: links.ctrRepository,
+          },
+          {
+            label: "Dataset",
+            value: "10 million",
+            context: "Criteo records using a documented 7M/1M/2M split.",
+            evidenceHref: links.ctrRepository,
+          },
+        ],
       },
-      featured: true,
-      highlightColor: "from-purple-500/20 via-pink-500/10 to-transparent",
+      limitations:
+        "The results are offline academic measurements and do not demonstrate revenue or user impact. Exact reproduction needs the original data split, preprocessing settings, model artifacts, and random seeds.",
+      stack: [
+        "Python",
+        "XGBoost",
+        "LightGBM",
+        "Optuna",
+        "Flask",
+        "Streamlit",
+      ],
+      links: [
+        { label: "Repository", href: links.ctrRepository, external: true },
+        { label: "Live demo", href: links.ctrDemo, external: true },
+      ],
+      presentation: "supporting",
+      visual: "ctr",
     },
-  ] as Project[],
-
-  skills: [
+  ],
+  background: [
     {
-      title: "Generative AI & Agentic Systems",
-      iconName: "Bot",
-      skills: [
-        { name: "LangGraph", level: "Advanced" },
-        { name: "LangChain", level: "Advanced" },
-        { name: "RAG Architectures", level: "Advanced" },
-        { name: "FAISS & Vector DBs", level: "Advanced" },
-        { name: "Groq API & Llama 3.3", level: "Advanced" },
-        { name: "GPT OSS 120B", level: "Proficient" },
-        { name: "Hugging Face Spaces", level: "Advanced" },
-        { name: "Self-Correction & Reflection Loops", level: "Advanced" },
+      period: "Jun–Aug 2026",
+      title: "Creator and package author",
+      organization: "Vigil · Open source",
+      detail:
+        "Published vigil-drift with regression tests, installation checks and GitHub Actions; added reproducible comparisons and documented attribution limitations.",
+      links: [
+        { label: "PyPI", href: links.vigilPackage, external: true },
+        { label: "Documentation", href: links.vigilDocs, external: true },
       ],
     },
     {
-      title: "Computer Vision & Document AI",
-      iconName: "Eye",
-      skills: [
-        { name: "YOLOv8 (Ultralytics)", level: "Advanced" },
-        { name: "Tesseract OCR (CC-Guided)", level: "Advanced" },
-        { name: "OpenCV", level: "Proficient" },
-        { name: "NetworkX Entity Graphs", level: "Advanced" },
-        { name: "ISA-5.1 Standards Parsing", level: "Proficient" },
-        { name: "Image Preprocessing & CLAHE", level: "Proficient" },
+      period: "Jan–May 2026",
+      title: "Generative AI Intern",
+      organization: "TransOrg Analytics (Pickl.AI) × LPU",
+      detail:
+        "Led the technical implementation of the F1InsightAI industry project and completed the academic submission as part of a group.",
+      links: [
+        { label: "Project", href: links.f1Repository, external: true },
       ],
     },
     {
-      title: "Streaming, MLOps & Infrastructure",
-      iconName: "Cpu",
-      skills: [
-        { name: "Apache Kafka", level: "Proficient" },
-        { name: "Apache Airflow", level: "Proficient" },
-        { name: "MLflow Tracking", level: "Proficient" },
-        { name: "Docker & Compose", level: "Advanced" },
-        { name: "Jenkins CI/CD", level: "Proficient" },
-        { name: "GitHub Actions", level: "Advanced" },
-        { name: "PyPI Package Publishing", level: "Advanced" },
-        { name: "Concept Drift & Autoencoders", level: "Advanced" },
-      ],
+      period: "Aug 2022–May 2026",
+      title: "B.Tech (Hons.) Computer Science and Engineering",
+      organization: "Lovely Professional University",
+      detail:
+        "Completed the Data Science and Data Engineering specialization with a CGPA of 8.38/10.",
     },
     {
-      title: "Backends, Databases & Analytics",
-      iconName: "Database",
-      skills: [
-        { name: "Python 3.11+", level: "Expert" },
-        { name: "FastAPI", level: "Advanced" },
-        { name: "Flask", level: "Advanced" },
-        { name: "TiDB Cloud", level: "Proficient" },
-        { name: "PostgreSQL & MySQL", level: "Proficient" },
-        { name: "Streamlit", level: "Advanced" },
-        { name: "XGBoost & LightGBM", level: "Advanced" },
-        { name: "Optuna Optimization", level: "Proficient" },
-      ],
+      period: "Mar 2024–May 2026",
+      title: "Seed money project lead",
+      organization: "University startup evaluation",
+      detail:
+        "Secured INR 100,000 in university seed funding after presenting the concept, implementation roadmap, and budget to an academic panel.",
     },
-  ] as SkillCategory[],
-
-  milestones: [
-    {
-      year: "Jun 2026 – Present",
-      role: "Creator & PyPI Author",
-      company: "Vigil Project (`vigil-drift`)",
-      location: "Open Source · PyPI",
-      description: [
-        "Architected and published `vigil-drift` on PyPI for zero-label unsupervised concept drift monitoring in real-time streaming data.",
-        "Built Dual Autoencoder architecture (Adaptive and Frozen Mirror) with replicated T-tests, delivering 93.3% precision on NSL-KDD and feature-level attribution.",
-        "Engineered stream-native Kafka consumer, FastAPI service, and Airflow auto-retrain DAG with quality gates and 81% test coverage.",
-      ],
-      tags: ["PyTorch", "vigil-drift", "Kafka", "Airflow", "FastAPI", "MLflow", "PyPI"],
-      badge: "Published Package (Aug 2026)",
-    },
-    {
-      year: "Jan 2026 – May 2026",
-      role: "Generative AI Intern",
-      company: "TransOrg Analytics (Pickl.AI) × LPU",
-      location: "Final Semester Industry Tie-Up",
-      description: [
-        "Architected F1InsightAI, an enterprise Text-to-SQL RAG system querying 700,000+ records across 14 relational tables on TiDB Cloud.",
-        "Engineered 9-node LangGraph autonomous state graph with FAISS schema RAG and self-correcting retry loops, achieving 83.3% first-pass SQL execution accuracy.",
-        "Delivered production-grade evaluation telemetry (5.5x MRR lift: 0.12 ➔ 0.67) and packaged modular REST inference endpoints.",
-      ],
-      tags: ["F1InsightAI", "LangGraph", "TiDB Cloud", "83.3% Accuracy", "5.5x MRR Lift", "TransOrg Analytics"],
-      badge: "Industry Internship",
-    },
-    {
-      year: "Mar 2024 – May 2026",
-      role: "Seed Fund Recipient (₹1,00,000 Grant)",
-      company: "University Startup Incubation Evaluation",
-      location: "Lovely Professional University",
-      description: [
-        "Awarded competitive ₹1,00,000 startup seed grant following technical evaluation and working prototype evaluation.",
-        "Recognized by university startup panel for applying machine learning workflows to high-impact problem domains.",
-      ],
-      tags: ["₹1,00,000 Grant", "Applied AI", "Startup Evaluation"],
-      badge: "Incubation Grant Winner",
-    },
-    {
-      year: "Aug 2022 – May 2026",
-      role: "B.Tech (Hons.) CSE (Data Science & Data Engineering)",
-      company: "Lovely Professional University",
-      location: "Punjab, India",
-      description: [
-        "Specialization: Data Science & Data Engineering. Graduated with a strong cumulative CGPA of 8.38.",
-        "Core coursework: Distributed Systems, Advanced Machine Learning, Data Warehousing, Computer Vision, Cloud Computing.",
-        "Participated in technical hackathons and built multiple practical machine learning & Generative AI projects.",
-      ],
-      tags: ["CGPA: 8.38", "Data Science", "Data Engineering", "Algorithms"],
-      badge: "Academic Excellence",
-    },
-  ] as Milestone[],
+  ],
+  contact: {
+    heading: "Build something we can measure.",
+    note:
+      "I am looking for full-time Applied AI and Machine Learning roles where evaluation and engineering matter.",
+    email: "venkateswarsahu000@gmail.com",
+    location: "Yanam, Andhra Pradesh, India",
+    availability: "Open to relocation and remote opportunities",
+    links: [
+      {
+        label: "Email",
+        href: "mailto:venkateswarsahu000@gmail.com",
+      },
+      { label: "Resume", href: links.resume },
+      { label: "LinkedIn", href: links.linkedin, external: true },
+      { label: "GitHub", href: links.github, external: true },
+      { label: "Hugging Face", href: links.huggingFace, external: true },
+    ],
+  },
 };

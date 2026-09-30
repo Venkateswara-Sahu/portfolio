@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Venkateswara Sahu — portfolio
 
-## Getting Started
+A warm editorial portfolio for Applied AI and Machine Learning work, built with Next.js, React, TypeScript, Tailwind CSS, and Motion.
 
-First, run the development server:
+## Run locally
 
-```bash
+Use Node.js 20.9 or later and npm. Install dependencies with `npm ci`, then:
+
+```sh
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. For a production preview:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm run build
+npm run start -- --port 3014
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open http://localhost:3014. The build uses framework-managed Google fonts, so a fresh build may need network access for fonts.
 
-## Learn More
+## Verify
 
-To learn more about Next.js, take a look at the following resources:
+```sh
+npm test
+npm run typecheck
+npm run lint
+npm run build
+npm run test:e2e
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Vitest covers content integrity, the server-rendered page, and project selection behavior. Playwright tests use the installed Microsoft Edge browser (`msedge` channel), build the app, and launch a temporary production server on port 3020. Keep that port free. They cover keyboard selection, responsive geometry and readable copy, native disclosures without JavaScript, and the master résumé response.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+On systems without Edge, install Microsoft Edge before running the browser tests. No browser download or deployment is part of the test command. Browser traces are retained only for failed tests.
 
-## Deploy on Vercel
+## Content and layout
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `src/data/portfolio.ts` is the canonical typed content. Keep metrics attached to their evaluation scope and evidence links.
+- `src/app/page.tsx` assembles the server-rendered page. Hero motion and the project selector are progressive enhancements; full project text and links remain in HTML.
+- `src/components/projects/` contains the selector and case studies. Native `details` disclosures expose architecture and limitations without JavaScript.
+- `src/components/visuals/` contains explicitly illustrative diagrams, with readable text flows on small screens. They do not represent measured telemetry.
+- `public/projects/` contains a real F1 results capture and a sample P&ID input drawing. Captions distinguish captures, inputs, and evaluation evidence.
+- `public/resumes/Venkateswara_Sahu_Applied_AI_Resume.pdf` is the one public résumé. Replace it deliberately when updating career evidence.
+- `src/app/globals.css` contains the ivory, near-black, orange editorial styles. Green is reserved for measured evaluation results.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The external demo links point to third-party services. An HTTP response confirms reachability, not a functioning model backend. Publication and deployment remain separate, explicit release steps.
