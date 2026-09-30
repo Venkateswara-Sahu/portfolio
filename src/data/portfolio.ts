@@ -113,7 +113,7 @@ export const portfolioContent: PortfolioContent = {
       number: "01",
       title: "Vigil",
       discipline: "Concept drift · MLOps",
-      period: "Jun–Aug 2026",
+      period: "Jun–Sep 2026",
       summary:
         "A published drift-monitoring package with feature-error rankings and reproducible baseline evaluation.",
       problem:
@@ -345,7 +345,7 @@ export const portfolioContent: PortfolioContent = {
   ],
   background: [
     {
-      period: "Jun–Aug 2026",
+      period: "Jun–Sep 2026",
       title: "Creator and package author",
       organization: "Vigil · Open source",
       detail:
@@ -366,7 +366,7 @@ export const portfolioContent: PortfolioContent = {
       ],
     },
     {
-      period: "Aug 2022–May 2026",
+      period: "Aug 2022–Jun 2026",
       title: "B.Tech (Hons.) Computer Science and Engineering",
       organization: "Lovely Professional University",
       detail:
