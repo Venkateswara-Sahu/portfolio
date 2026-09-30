@@ -1,5 +1,6 @@
 import { KineticHero } from "@/components/editorial/KineticHero";
 import { BackgroundTimeline } from "@/components/editorial/BackgroundTimeline";
+import { BackToTop } from "@/components/editorial/BackToTop";
 import { ProjectExplorer } from "@/components/projects/ProjectExplorer";
 import { CaseStudy } from "@/components/projects/CaseStudy";
 import { portfolioContent } from "@/data/portfolio";
@@ -14,6 +15,7 @@ export default function HomePage() {
         {portfolioContent.projects.map((project) => <CaseStudy key={project.id} project={project} />)}
       </section>
       <BackgroundTimeline />
+      <BackToTop />
     </main>
   );
 }
