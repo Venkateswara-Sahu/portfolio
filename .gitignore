@@ -12,9 +12,12 @@
 
 # testing
 /coverage
+/test-results/
+/playwright-report/
 
 # isolated agent workspaces
 /.worktrees/
+/.superpowers/
 
 # next.js
 /.next/

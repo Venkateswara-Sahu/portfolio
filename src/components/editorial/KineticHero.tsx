@@ -65,18 +65,18 @@ export function KineticHero() {
   }, [animate, scope]);
 
   return (
-    <section aria-labelledby="hero-name" className="container-editorial py-[clamp(2rem,5vw,5rem)]">
+    <section aria-labelledby="hero-name" className="container-editorial kinetic-hero">
       <div className="grid items-start gap-6 md:grid-cols-[1fr_1fr] md:gap-12">
         <div>
           <h1 id="hero-name" className="m-0 text-[clamp(1.35rem,2.4vw,2.2rem)] font-semibold tracking-[-0.04em]">
             {identity.name}
           </h1>
-          <p className="mt-2 max-w-[30ch] text-[clamp(0.85rem,1.25vw,1.05rem)] leading-relaxed text-[var(--color-editorial-muted)]">
+          <p className="mt-2 max-w-[34ch] text-[clamp(1rem,1.25vw,1.1rem)] leading-relaxed text-[var(--color-editorial-muted)]">
             {identity.role}
           </p>
         </div>
         <div className="max-w-[36rem] md:justify-self-end">
-          <p className="m-0 text-[clamp(0.95rem,1.4vw,1.2rem)] leading-relaxed">
+          <p className="m-0 text-[clamp(1rem,1.4vw,1.2rem)] leading-relaxed">
             {identity.statement}
           </p>
           <div className="mt-5 flex flex-wrap gap-x-7 gap-y-3">
@@ -86,7 +86,7 @@ export function KineticHero() {
                 href={action.href}
                 target={action.external ? "_blank" : undefined}
                 rel={action.external ? "noreferrer" : undefined}
-                className={`inline-flex min-h-11 items-center border-b border-current text-xs font-bold uppercase tracking-[0.1em] first:text-accent ${focusRing}`}
+                className={`inline-flex min-h-11 items-center border-b border-current text-base font-bold first:text-accent ${focusRing}`}
               >
                 {action.label}
               </a>
@@ -95,12 +95,12 @@ export function KineticHero() {
         </div>
       </div>
 
-      <div ref={scope} className="relative isolate mt-[clamp(2rem,5vw,5rem)] border-b border-[var(--color-editorial-rule)] pb-6">
-        <p className="relative z-10 m-0 font-serif text-[clamp(3.1rem,12.7vw,12rem)] leading-[0.95] tracking-[-0.055em]">
+      <div ref={scope} className="hero-display relative isolate">
+        <p className="hero-display__phrase relative z-10 m-0 font-serif">
           <span className="sr-only">{identity.displayPhrase}</span>
           <span aria-hidden="true">
             {identity.displayPhrase.split(" ").map((word, index) => (
-              <span key={`${word}-${index}`} className={`${index === 2 ? "block" : "inline-block"} ${index === 0 ? "mr-[0.12em]" : ""} overflow-hidden align-bottom pb-[0.12em]`}>
+              <span key={`${word}-${index}`} className="inline-block overflow-hidden align-bottom pb-[0.12em]">
                 <span data-hero-word className={`inline-block ${index === 2 ? "italic" : ""}`}>
                   {word}{index < 2 ? "\u00a0" : ""}
                 </span>

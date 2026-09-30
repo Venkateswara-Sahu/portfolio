@@ -115,7 +115,7 @@ export const portfolioContent: PortfolioContent = {
       discipline: "Concept drift · MLOps",
       period: "Jun–Aug 2026",
       summary:
-        "A published Python package that detects and attributes distribution shifts without requiring labels.",
+        "A published drift-monitoring package with feature-error rankings and reproducible baseline evaluation.",
       problem:
         "Live ML inputs can drift before labels arrive, leaving teams without a direct signal that a model's operating conditions have changed.",
       contribution:
@@ -128,30 +128,30 @@ export const portfolioContent: PortfolioContent = {
       ],
       evaluation: {
         summary:
-          "The documented NSL-KDD experiment trained on 1,000 normal observations and streamed 50 chunks of 200 observations through three simulated phases.",
+          "The final bounded attribution study compared nine rankings across synthetic shifts and controlled CICIDS2017 development data. Results did not establish general superiority.",
         metrics: [
           {
-            label: "Drift precision",
-            value: "93.3%",
-            context: "NSL-KDD simulated stream; drift recall was 31.1%.",
+            label: "Evaluation seeds",
+            value: "20",
+            context: "Final trained, untrained and input-control attribution study.",
             evidenceHref: links.vigilRepository,
           },
           {
-            label: "Novel-class recall",
-            value: "100%",
-            context: "Novel attack phase in the documented NSL-KDD run.",
+            label: "Ranking methods",
+            value: "9",
+            context: "Reconstruction variants, input-change, KS and correlation baselines.",
             evidenceHref: links.vigilRepository,
           },
           {
-            label: "Detection delay",
-            value: "200 samples",
-            context: "One chunk in the 50 × 200-sample simulated stream.",
+            label: "Evaluation conditions",
+            value: "24",
+            context: "18 synthetic and 6 controlled real-data conditions; not attack detection.",
             evidenceHref: links.vigilRepository,
           },
         ],
       },
       limitations:
-        "The benchmark is a controlled NSL-KDD simulation, not a real deployment. Drift recall was 31.1%, one false alert appeared in five stable chunks, and subtle attack classes need better threshold tuning.",
+        "Training helped in some dependency conditions but did not consistently beat simple baselines. Controlled flow-feature injections are semi-synthetic, not causal explanations, held-out attack detection or production validation. No publication is claimed.",
       stack: [
         "Python",
         "PyTorch",
@@ -349,7 +349,7 @@ export const portfolioContent: PortfolioContent = {
       title: "Creator and package author",
       organization: "Vigil · Open source",
       detail:
-        "Published vigil-drift with 14 automated tests, 81% recorded coverage, installation checks, and GitHub Actions.",
+        "Published vigil-drift with regression tests, installation checks and GitHub Actions; added reproducible comparisons and documented attribution limitations.",
       links: [
         { label: "PyPI", href: links.vigilPackage, external: true },
         { label: "Documentation", href: links.vigilDocs, external: true },
@@ -398,214 +398,4 @@ export const portfolioContent: PortfolioContent = {
       { label: "Hugging Face", href: links.huggingFace, external: true },
     ],
   },
-};
-
-export interface Project {
-  id: string;
-  title: string;
-  subtitle: string;
-  tagline: string;
-  description: string;
-  badge: string;
-  category:
-    | "GenAI & Agentic"
-    | "MLOps & Systems"
-    | "Computer Vision"
-    | "Predictive ML";
-  metrics: Array<{ label: string; value: string; detail: string }>;
-  techStack: string[];
-  features: string[];
-  links: { github: string; demo?: string; docs?: string; pypi?: string };
-  featured: boolean;
-  highlightColor: string;
-}
-
-export interface ResumeTrack {
-  id: string;
-  title: string;
-  icon: string;
-  summary: string;
-  highlightProjects: string[];
-  primaryKeywords: string[];
-  file: string;
-}
-
-interface SkillCategory {
-  title: string;
-  iconName: string;
-  skills: Array<{ name: string; level: string }>;
-}
-
-interface Milestone {
-  year: string;
-  role: string;
-  company: string;
-  location: string;
-  description: string[];
-  tags: string[];
-  badge?: string;
-}
-
-const projectCategories: Record<ProjectVisual, Project["category"]> = {
-  vigil: "MLOps & Systems",
-  f1: "GenAI & Agentic",
-  pid: "Computer Vision",
-  ctr: "Predictive ML",
-};
-
-/**
- * Temporary compatibility adapter for the current page. The redesigned page
- * consumes `portfolioContent` directly; this export can be removed with the
- * obsolete page components after that route is assembled.
- */
-export const PORTFOLIO_DATA: {
-  personal: {
-    name: string;
-    role: string;
-    tagline: string;
-    bio: string;
-    locations: string[];
-    status: string;
-    email: string;
-    github: string;
-    linkedin: string;
-    huggingface: string;
-    vigilDocs: string;
-  };
-  metrics: Array<{
-    label: string;
-    value: number;
-    prefix?: string;
-    suffix?: string;
-    detail: string;
-  }>;
-  resumeTracks: ResumeTrack[];
-  projects: Project[];
-  skills: SkillCategory[];
-  milestones: Milestone[];
-} = {
-  personal: {
-    name: portfolioContent.identity.name,
-    role: portfolioContent.identity.role,
-    tagline: portfolioContent.identity.statement,
-    bio: portfolioContent.identity.statement,
-    locations: [portfolioContent.identity.location],
-    status: portfolioContent.identity.availability,
-    email: portfolioContent.contact.email,
-    github: links.github,
-    linkedin: links.linkedin,
-    huggingface: links.huggingFace,
-    vigilDocs: links.vigilDocs,
-  },
-  metrics: [
-    {
-      label: "F1 records",
-      value: 700000,
-      suffix: "+",
-      detail: "14 TiDB tables",
-    },
-    {
-      label: "Vigil test coverage",
-      value: 81,
-      suffix: "%",
-      detail: "14 automated tests",
-    },
-    {
-      label: "University seed funding",
-      value: 100000,
-      prefix: "INR ",
-      detail: "Academic panel award",
-    },
-  ],
-  resumeTracks: [
-    {
-      id: "applied-ai",
-      title: "Applied AI and Machine Learning",
-      icon: "FileText",
-      summary:
-        "One evidence-led resume covering evaluated AI, machine learning, and engineering work.",
-      highlightProjects: portfolioContent.projects.map(
-        (project) => project.title,
-      ),
-      primaryKeywords: [
-        "Python",
-        "PyTorch",
-        "LangGraph",
-        "XGBoost",
-        "FastAPI",
-        "Docker",
-      ],
-      file: links.resume,
-    },
-  ],
-  projects: portfolioContent.projects.map((project) => ({
-    id: project.id,
-    title: project.title,
-    subtitle: project.discipline,
-    tagline: project.summary,
-    description: `${project.problem} ${project.contribution}`,
-    badge:
-      project.presentation === "primary"
-        ? "Primary case study"
-        : "Supporting project",
-    category: projectCategories[project.visual],
-    metrics: project.evaluation.metrics.map((metric) => ({
-      label: metric.label,
-      value: metric.value,
-      detail: metric.context,
-    })),
-    techStack: project.stack,
-    features: project.architecture,
-    links: {
-      github:
-        project.links.find((link) => link.label === "Repository")?.href ?? "",
-      demo: project.links.find((link) => link.label === "Live demo")?.href,
-      docs: project.links.find((link) => link.label === "Documentation")
-        ?.href,
-      pypi: project.links.find((link) => link.label === "PyPI package")?.href,
-    },
-    featured: project.presentation === "primary",
-    highlightColor: "",
-  })),
-  skills: [
-    {
-      title: "Applied AI and retrieval",
-      iconName: "Bot",
-      skills: ["LangGraph", "FAISS", "LLM APIs", "Text-to-SQL"].map(
-        (name) => ({ name, level: "Used in project work" }),
-      ),
-    },
-    {
-      title: "Machine learning",
-      iconName: "Cpu",
-      skills: ["PyTorch", "XGBoost", "LightGBM", "Optuna"].map((name) => ({
-        name,
-        level: "Used in project work",
-      })),
-    },
-    {
-      title: "Vision and documents",
-      iconName: "Eye",
-      skills: ["YOLOv8", "Tesseract OCR", "NetworkX", "OpenCV"].map(
-        (name) => ({ name, level: "Used in project work" }),
-      ),
-    },
-    {
-      title: "Engineering",
-      iconName: "Database",
-      skills: ["FastAPI", "Flask", "Docker", "Kafka", "Airflow", "MLflow"].map(
-        (name) => ({ name, level: "Used in project work" }),
-      ),
-    },
-  ],
-  milestones: portfolioContent.background.map((entry) => ({
-    year: entry.period,
-    role: entry.title,
-    company: entry.organization,
-    location: entry.organization.includes("LPU")
-      ? "Punjab, India"
-      : "Project work",
-    description: [entry.detail],
-    tags: [],
-  })),
 };

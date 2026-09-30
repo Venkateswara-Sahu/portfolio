@@ -25,8 +25,8 @@ const mono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://venkateswara-sahu.vercel.app"),
-  title: "Venkateswara Sahu | AI & MLOps Systems Engineer",
-  description: "Engineering autonomous AI systems, zero-label drift monitoring, and high-scale ML. B.Tech (Hons.) in CSE (Data Science & Data Engineering) @ LPU (CGPA 8.38). Creator of 'vigil-drift' on PyPI.",
+  title: "Venkateswara Sahu | Applied AI & Machine Learning Engineer",
+  description: "Evaluated AI systems, from concept-drift monitoring to Text-to-SQL agents and document intelligence. Explore project evidence, code, and a master resume.",
   keywords: [
     "Venkateswara Sahu",
     "Generative AI Engineer",
@@ -43,8 +43,8 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Venkateswara Sahu", url: "https://github.com/Venkateswara-Sahu" }],
   openGraph: {
-    title: "Venkateswara Sahu | AI & MLOps Systems Engineer",
-    description: "Engineering autonomous AI systems, zero-label drift monitoring, and high-scale ML. Creator of 'vigil-drift' on PyPI.",
+    title: "Venkateswara Sahu | Applied AI & Machine Learning Engineer",
+    description: "Evaluated AI systems with evidence you can inspect. Concept drift, Text-to-SQL, document intelligence, and machine learning.",
     url: "https://venkateswara-sahu.vercel.app",
     siteName: "Venkateswara Sahu Portfolio",
     images: [
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Venkateswara Sahu — AI & MLOps Systems Engineer",
+        alt: "Venkateswara Sahu — Applied AI & Machine Learning Engineer",
       },
     ],
     locale: "en_US",
@@ -60,8 +60,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Venkateswara Sahu | AI & MLOps Systems Engineer",
-    description: "Engineering autonomous AI systems, zero-label drift monitoring, and high-scale ML. Creator of 'vigil-drift' on PyPI.",
+    title: "Venkateswara Sahu | Applied AI & Machine Learning Engineer",
+    description: "Evaluated AI systems with evidence you can inspect. Concept drift, Text-to-SQL, document intelligence, and machine learning.",
     images: ["/opengraph-image"],
   },
 };
@@ -77,6 +77,7 @@ export default function RootLayout({
       className={`${sans.variable} ${serif.variable} ${mono.variable}`}
     >
       <body id="top">
+        <a className="skip-link" href="#main-content">Skip to content</a>
         <EditorialNav />
         {children}
         <ContactFooter />

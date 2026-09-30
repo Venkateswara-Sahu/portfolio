@@ -21,10 +21,16 @@ describe("portfolioContent", () => {
     expect(vigil?.evaluation.metrics).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          value: "200 samples",
+          label: "Evaluation seeds",
+          value: "20",
         }),
       ]),
     );
+
+    const vigilCopy = JSON.stringify(vigil);
+    expect(vigilCopy).not.toContain("93.3%");
+    expect(vigilCopy).not.toContain("100%");
+    expect(vigil?.limitations).toContain("No publication is claimed");
 
     const publicCopy = JSON.stringify(portfolioContent).toLowerCase();
 
