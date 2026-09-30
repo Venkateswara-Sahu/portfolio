@@ -1,14 +1,22 @@
 "use client";
 
 import { useRef, useState, type KeyboardEvent } from "react";
+import { AnimatePresence } from "framer-motion";
 import { portfolioContent, type ProjectCaseStudy } from "@/data/portfolio";
-import { ProjectVisual } from "@/components/visuals/ProjectVisual";
+import { ProjectPreview } from "./ProjectPreview";
 
 export function ProjectExplorer({ projects = portfolioContent.projects }: { projects?: ProjectCaseStudy[] }) {
   const [selectedId, setSelectedId] = useState(projects[0]?.id);
+  const [hasSelected, setHasSelected] = useState(false);
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
   const selected = projects.find(({ id }) => id === selectedId) ?? projects[0];
   if (!selected) return null;
+
+  function selectProject(id: string) {
+    if (id === selectedId) return;
+    setHasSelected(true);
+    setSelectedId(id);
+  }
 
   function navigate(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     let next: number;
@@ -35,10 +43,10 @@ export function ProjectExplorer({ projects = portfolioContent.projects }: { proj
             <div key={project.id} className="project-index__row" data-selected={selected.id === project.id}>
               <button type="button" ref={(element) => { buttons.current[index] = element; }}
                 aria-label={`Preview ${project.title}`} aria-pressed={selected.id === project.id} aria-controls="project-stage"
-                onClick={() => setSelectedId(project.id)} onFocus={() => setSelectedId(project.id)}
+                onClick={() => selectProject(project.id)} onFocus={() => selectProject(project.id)}
                 onMouseEnter={() => {
                   // Pointer focus should not block hover; preserve only keyboard-visible focus.
-                  if (!buttons.current.some((button) => button?.matches(":focus-visible"))) setSelectedId(project.id);
+                  if (!buttons.current.some((button) => button?.matches(":focus-visible"))) selectProject(project.id);
                 }}
                 onKeyDown={(event) => navigate(event, index)}>
                 <span className="project-index__number">{project.number}</span>
@@ -51,12 +59,9 @@ export function ProjectExplorer({ projects = portfolioContent.projects }: { proj
           <p className="project-index__hint">Select a project to explore. Full case studies below.</p>
         </div>
         <div id="project-stage" role="region" aria-label={`${selected.title} project preview`} className="project-stage">
-          <ProjectVisual visual={selected.visual} title={selected.title} />
-          <div className="project-stage__copy" aria-live="polite" aria-atomic="true">
-            {selected.visual === "vigil" && <div className="package-identity"><span>Published Python package</span><code>pip install vigil-drift</code></div>}
-            <p>{selected.summary}</p>
-            <div className="preview-evidence"><strong>{selected.evaluation.metrics[0].value}</strong><div><span>{selected.evaluation.metrics[0].label}</span><p>{selected.evaluation.metrics[0].context}</p><a href={selected.evaluation.metrics[0].evidenceHref} target="_blank" rel="noreferrer">View evidence ↗</a></div></div>
-          </div>
+          <AnimatePresence initial={false}>
+            <ProjectPreview key={selected.id} project={selected} animate={hasSelected} />
+          </AnimatePresence>
         </div>
       </div>
     </section>

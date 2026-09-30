@@ -151,7 +151,7 @@ body {
 }
 
 .editorial-nav__link::after,
-.contact-footer__link::after {
+.contact-footer__label::after {
   position: absolute;
   right: 0;
   bottom: -0.28rem;
@@ -165,7 +165,8 @@ body {
 }
 
 .editorial-nav__link:hover::after,
-.contact-footer__link:hover::after {
+.contact-footer__link:hover .contact-footer__label::after,
+.contact-footer__link:focus-visible .contact-footer__label::after {
   transform: scaleX(1);
   transform-origin: left;
 }
@@ -242,10 +243,53 @@ body {
 
 .contact-footer__links {
   display: flex;
+  align-items: flex-start;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 1rem 1.5rem;
   color: var(--color-editorial-paper);
+}
+
+.contact-footer__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+
+.contact-footer__label {
+  position: relative;
+  display: inline-block;
+}
+
+.back-to-top {
+  position: fixed;
+  z-index: 30;
+  right: max(1.25rem, env(safe-area-inset-right));
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid #938d82;
+  border-radius: 50%;
+  background: var(--color-editorial-ink);
+  color: var(--color-editorial-paper);
+  box-shadow: 0 3px 12px rgb(24 23 19 / 12%);
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.back-to-top:hover {
+  background: var(--color-editorial-paper);
+  color: var(--color-editorial-ink);
+}
+
+.back-to-top svg {
+  transition: transform 160ms ease;
+}
+
+.back-to-top:hover svg {
+  transform: translateY(-2px);
 }
 
 .contact-footer__colophon {
@@ -312,11 +356,17 @@ section, article { scroll-margin-top: 2rem; }
 .project-index__number { font-family: var(--font-ibm-plex-mono), monospace; font-size: .8rem; padding-top: .45rem; color: var(--color-editorial-muted); }
 .project-index__name { display: block; font-size: clamp(1.2rem, 2vw, 1.75rem); font-weight: 600; letter-spacing: -.035em; }
 .project-index__discipline { display: block; font-size: 1rem; line-height: 1.5; color: var(--color-editorial-muted); margin-top: .2rem; }
-.project-index__indicator { font-size: 1.5rem; opacity: .35; }
+.project-index__indicator { font-size: 1.5rem; opacity: .35; transition: transform 160ms ease, opacity 160ms ease; }
+.project-index__row button:hover .project-index__indicator { transform: translate(2px, -2px); opacity: 1; }
 .project-index__row[data-selected="true"] .project-index__name, .project-index__row[data-selected="true"] .project-index__indicator { color: var(--color-editorial-orange); opacity: 1; }
 .project-index__read { display: inline-flex; align-items: center; min-height: 2rem; gap: .65rem; margin-left: 2.7rem; font-size: .85rem; text-underline-offset: .25rem; }
 .project-index__hint { font-size: .8rem; color: var(--color-editorial-muted); line-height: 1.6; max-width: 40ch; margin: 1rem 0; }
-.project-stage { background: var(--color-editorial-paper-deep); min-width: 0; }
+.project-stage { display: grid; background: var(--color-editorial-paper-deep); min-width: 0; }
+.project-preview__layer { grid-area: 1 / 1; z-index: 1; min-width: 0; background: var(--color-editorial-paper-deep); }
+.project-preview__layer[data-animate="true"] { animation: project-preview-in 180ms ease-out; }
+.project-preview__layer[data-present="false"] { z-index: 0; pointer-events: none; animation: project-preview-out 180ms ease-out forwards; }
+@keyframes project-preview-in { from { opacity: .35; } to { opacity: 1; } }
+@keyframes project-preview-out { from { opacity: 1; } to { opacity: 0; } }
 .system-visual { background: var(--color-editorial-ink); color: var(--color-editorial-paper); margin: 0; overflow: hidden; }
 .system-visual svg { display: block; width: 100%; height: auto; font-family: var(--font-manrope), Arial, sans-serif; }
 .system-visual figcaption { border-top: 1px solid #49463e; padding: .7rem 1.5rem; color: #bcb6a9; font-size: .75rem; }
@@ -421,6 +471,10 @@ section, article { scroll-margin-top: 2rem; }
   .contact-footer__heading { max-width: 20ch; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .project-preview__layer { animation: none !important; }
+  .project-index__row button:hover .project-index__indicator,
+  .back-to-top:hover svg { transform: none; }
+
   html {
     scroll-behavior: auto;
   }

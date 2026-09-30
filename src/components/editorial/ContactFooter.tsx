@@ -11,7 +11,7 @@ function ContactLink({ link }: { link: PortfolioLink }) {
       rel={link.external ? "noreferrer" : undefined}
       target={link.external ? "_blank" : undefined}
     >
-      {link.label}
+      <span className="contact-footer__label">{link.label}</span>
     </a>
   );
 }
