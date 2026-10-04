@@ -92,7 +92,7 @@ export const portfolioContent: PortfolioContent = {
     displayPhrase: "Make it measurable.",
     statement:
       "I build evaluated AI systems—from concept-drift monitoring to Text-to-SQL agents—with evidence you can inspect.",
-    location: "Yanam, Andhra Pradesh, India",
+    location: "Neelapalli, Andhra Pradesh, India",
     availability: "Open to full-time roles and relocation",
     actions: [
       { label: "Resume", href: links.resume },
@@ -183,24 +183,24 @@ export const portfolioContent: PortfolioContent = {
         "Led the technical implementation for the TransOrg Analytics (Pickl.AI) × LPU industry project, building the nine-node LangGraph workflow, schema retrieval, SQL validation, error-guided retry path, Flask API, and public demo.",
       architecture: [
         "Classify the question and retrieve a focused sub-schema with FAISS.",
-        "Generate read-only SQL from the retrieved tables and relationships.",
+        "Generate SELECT queries from retrieved tables and relationships, subject to application validation.",
         "Execute against 14 TiDB tables and reflect on execution errors.",
-        "Return the answer with SQL, results, and retrieval measurements visible.",
+        "Return the answer with SQL, results, and explicitly bounded retrieval diagnostics.",
       ],
       evaluation: {
         summary:
-          "The recorded 20-question benchmark included 18 SQL-generating questions and three documented schema-retrieval iterations.",
+          "The recorded 20-question benchmark included 18 SQL questions checked through generated SQL, nonempty results and answer keywords; these were smoke checks.",
         metrics: [
           {
-            label: "First-attempt SQL accuracy",
-            value: "83.3%",
-            context: "15 of 18 SQL-generating benchmark questions.",
+            label: "SQL-question smoke checks",
+            value: "15/18",
+            context: "83.3% passed the recorded keyword/result-presence checks; not reference-result correctness or first-attempt accuracy.",
             evidenceHref: links.f1Repository,
           },
           {
-            label: "Schema-retrieval MRR",
-            value: "0.12 → 0.67",
-            context: "Average MRR across three recorded retrieval iterations.",
+            label: "Retrieval aggregate",
+            value: "Not established",
+            context: "Schema enrichment and co-occurrence rules are implemented; the historical MRR aggregate has no recovered reproducible basis.",
             evidenceHref: links.f1Repository,
           },
           {
@@ -212,7 +212,7 @@ export const portfolioContent: PortfolioContent = {
         ],
       },
       limitations:
-        "The recorded benchmark contained no retry cases, so it measures first-attempt behavior rather than recovery reliability. It is a bounded project evaluation, not evidence of service-scale performance.",
+        "The historical evaluator read the wrong retry-trace field, so recorded zero counts cannot establish whether retries occurred. Retrieval diagnostics use generated SQL as a relevance proxy. No live reliability, independent SQL accuracy or production deployment is claimed.",
       stack: [
         "Python",
         "LangGraph",
@@ -303,30 +303,30 @@ export const portfolioContent: PortfolioContent = {
       ],
       evaluation: {
         summary:
-          "The recorded experiment used 10 million Criteo rows split into 7 million training, 1 million validation, and 2 million test observations.",
+          "The project documents a 10-million-row Criteo sample, feature preparation and released model assets. Original training/evaluation outputs have not been recovered, so numerical performance is not claimed.",
         metrics: [
           {
-            label: "XGBoost test AUC",
-            value: "0.9067",
-            context: "Compared with 0.9024 for LightGBM on the recorded split.",
+            label: "Model evaluation",
+            value: "Unresolved",
+            context: "README and dashboard disagree about AUC split labels; original predictions and evaluation outputs are needed.",
             evidenceHref: links.ctrRepository,
           },
           {
-            label: "Top-decile CTR lift",
-            value: "265.6%",
-            context: "Offline ranking analysis, not an online A/B test.",
+            label: "Feature scope",
+            value: "39 → 150",
+            context: "Documented raw-field/model-feature dimensions; serving consistency still needs repair and validation.",
             evidenceHref: links.ctrRepository,
           },
           {
             label: "Dataset",
             value: "10 million",
-            context: "Criteo records using a documented 7M/1M/2M split.",
+            context: "Documented Criteo project sample; original row counts and split provenance were not independently reconstructed.",
             evidenceHref: links.ctrRepository,
           },
         ],
       },
       limitations:
-        "The results are offline academic measurements and do not demonstrate revenue or user impact. Exact reproduction needs the original data split, preprocessing settings, model artifacts, and random seeds.",
+        "Displayed AUC and ranking-lift figures are omitted until original evaluation artifacts are recovered. Serving code contains batch-dependent preprocessing and a missing-indicator defect; their repair must preserve compatibility with frozen model assets. No revenue or user impact is claimed.",
       stack: [
         "Python",
         "XGBoost",
