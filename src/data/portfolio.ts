@@ -385,7 +385,7 @@ export const portfolioContent: PortfolioContent = {
     note:
       "I am looking for full-time Applied AI and Machine Learning roles where evaluation and engineering matter.",
     email: "venkateswarsahu000@gmail.com",
-    location: "Yanam, Andhra Pradesh, India",
+    location: "Neelapalli, Andhra Pradesh, India",
     availability: "Open to relocation and remote opportunities",
     links: [
       {
