@@ -189,30 +189,30 @@ export const portfolioContent: PortfolioContent = {
       ],
       evaluation: {
         summary:
-          "The recorded 20-question benchmark included 18 SQL questions checked through generated SQL, nonempty results and answer keywords; these were smoke checks.",
+          "Re-evaluated in October 2026: 40 separate SQL questions were compared with independently reviewed reference results on a frozen original-data snapshot, after 20 development questions.",
         metrics: [
           {
-            label: "SQL-question smoke checks",
-            value: "15/18",
-            context: "83.3% passed the recorded keyword/result-presence checks; not reference-result correctness or first-attempt accuracy.",
-            evidenceHref: links.f1Repository,
+            label: "Reference-result matches",
+            value: "39/40",
+            context: "39/40 (97.5%) first-attempt and 39/40 (97.5%) final matches; all questions included. Separate invalid-column probes recovered 5/5.",
+            evidenceHref: "https://github.com/Venkateswara-Sahu/AI_Powered_Text-to-SQL_RAG_Chatbot/blob/f627442cacb4ee9c3c0b504b0d5fa1ffebc539b5/docs/evaluation/results.md",
           },
           {
-            label: "Retrieval aggregate",
-            value: "Not established",
-            context: "Schema enrichment and co-occurrence rules are implemented; the historical MRR aggregate has no recovered reproducible basis.",
-            evidenceHref: links.f1Repository,
+            label: "Dense MRR@7",
+            value: "0.888",
+            context: "Independent-label comparison: plain 0.678 → enriched 0.888; macro Recall@7 0.838 → 0.950. Same embeddings, snapshot and k.",
+            evidenceHref: "https://github.com/Venkateswara-Sahu/AI_Powered_Text-to-SQL_RAG_Chatbot/blob/f627442cacb4ee9c3c0b504b0d5fa1ffebc539b5/docs/evaluation/results.md",
           },
           {
-            label: "Database scope",
-            value: "700,000+",
-            context: "Formula 1 records across 14 TiDB tables.",
-            evidenceHref: links.f1Repository,
+            label: "Frozen database scope",
+            value: "701,433",
+            context: "Records in 14 Formula 1 tables, races 1950–2024; isolated MySQL copy of the original project database.",
+            evidenceHref: "https://github.com/Venkateswara-Sahu/AI_Powered_Text-to-SQL_RAG_Chatbot/blob/f627442cacb4ee9c3c0b504b0d5fa1ffebc539b5/docs/evaluation/results.md",
           },
         ],
       },
       limitations:
-        "The historical evaluator read the wrong retry-trace field, so recorded zero counts cannot establish whether retries occurred. Retrieval diagnostics use generated SQL as a relevance proxy. No live reliability, independent SQL accuracy or production deployment is claimed.",
+        "Small authored F1 study with related development/evaluation query patterns, not general SQL accuracy. Runtime diagnostics remain generated-SQL proxies. Controlled probes do not estimate natural retry recovery; latency includes free-tier pacing. Production TiDB grants, multi-user access and deployment readiness remain separate requirements.",
       stack: [
         "Python",
         "LangGraph",

@@ -3,7 +3,7 @@ import type { ProjectCaseStudy, PortfolioLink } from "@/data/portfolio";
 import { ProjectVisual } from "@/components/visuals/ProjectVisual";
 
 const measuredResults = new Set([
-  "SQL-question smoke checks", "OCR processing",
+  "Reference-result matches", "Dense MRR@7", "OCR processing",
 ]);
 
 export function ProjectLinks({ links }: { links: PortfolioLink[] }) {
