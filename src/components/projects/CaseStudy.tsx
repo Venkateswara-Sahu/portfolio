@@ -3,8 +3,7 @@ import type { ProjectCaseStudy, PortfolioLink } from "@/data/portfolio";
 import { ProjectVisual } from "@/components/visuals/ProjectVisual";
 
 const measuredResults = new Set([
-  "First-attempt SQL accuracy", "Schema-retrieval MRR", "OCR processing",
-  "XGBoost test AUC", "Top-decile CTR lift",
+  "Reference-result matches", "Dense MRR@7", "OCR processing",
 ]);
 
 export function ProjectLinks({ links }: { links: PortfolioLink[] }) {

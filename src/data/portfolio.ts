@@ -92,7 +92,7 @@ export const portfolioContent: PortfolioContent = {
     displayPhrase: "Make it measurable.",
     statement:
       "I build evaluated AI systems—from concept-drift monitoring to Text-to-SQL agents—with evidence you can inspect.",
-    location: "Yanam, Andhra Pradesh, India",
+    location: "Neelapalli, Andhra Pradesh, India",
     availability: "Open to full-time roles and relocation",
     actions: [
       { label: "Resume", href: links.resume },
@@ -183,36 +183,36 @@ export const portfolioContent: PortfolioContent = {
         "Led the technical implementation for the TransOrg Analytics (Pickl.AI) × LPU industry project, building the nine-node LangGraph workflow, schema retrieval, SQL validation, error-guided retry path, Flask API, and public demo.",
       architecture: [
         "Classify the question and retrieve a focused sub-schema with FAISS.",
-        "Generate read-only SQL from the retrieved tables and relationships.",
+        "Generate SELECT queries from retrieved tables and relationships, subject to application validation.",
         "Execute against 14 TiDB tables and reflect on execution errors.",
-        "Return the answer with SQL, results, and retrieval measurements visible.",
+        "Return the answer with SQL, results, and explicitly bounded retrieval diagnostics.",
       ],
       evaluation: {
         summary:
-          "The recorded 20-question benchmark included 18 SQL-generating questions and three documented schema-retrieval iterations.",
+          "Re-evaluated in October 2026: 40 separate SQL questions were compared with independently reviewed reference results on a frozen original-data snapshot, after 20 development questions.",
         metrics: [
           {
-            label: "First-attempt SQL accuracy",
-            value: "83.3%",
-            context: "15 of 18 SQL-generating benchmark questions.",
-            evidenceHref: links.f1Repository,
+            label: "Reference-result matches",
+            value: "39/40",
+            context: "39/40 (97.5%) first-attempt and 39/40 (97.5%) final matches; all questions included. Separate invalid-column probes recovered 5/5.",
+            evidenceHref: "https://github.com/Venkateswara-Sahu/AI_Powered_Text-to-SQL_RAG_Chatbot/blob/f627442cacb4ee9c3c0b504b0d5fa1ffebc539b5/docs/evaluation/results.md",
           },
           {
-            label: "Schema-retrieval MRR",
-            value: "0.12 → 0.67",
-            context: "Average MRR across three recorded retrieval iterations.",
-            evidenceHref: links.f1Repository,
+            label: "Dense MRR@7",
+            value: "0.888",
+            context: "Independent-label comparison: plain 0.678 → enriched 0.888; macro Recall@7 0.838 → 0.950. Same embeddings, snapshot and k.",
+            evidenceHref: "https://github.com/Venkateswara-Sahu/AI_Powered_Text-to-SQL_RAG_Chatbot/blob/f627442cacb4ee9c3c0b504b0d5fa1ffebc539b5/docs/evaluation/results.md",
           },
           {
-            label: "Database scope",
-            value: "700,000+",
-            context: "Formula 1 records across 14 TiDB tables.",
-            evidenceHref: links.f1Repository,
+            label: "Frozen database scope",
+            value: "701,433",
+            context: "Records in 14 Formula 1 tables, races 1950–2024; isolated MySQL copy of the original project database.",
+            evidenceHref: "https://github.com/Venkateswara-Sahu/AI_Powered_Text-to-SQL_RAG_Chatbot/blob/f627442cacb4ee9c3c0b504b0d5fa1ffebc539b5/docs/evaluation/results.md",
           },
         ],
       },
       limitations:
-        "The recorded benchmark contained no retry cases, so it measures first-attempt behavior rather than recovery reliability. It is a bounded project evaluation, not evidence of service-scale performance.",
+        "Small authored F1 study with related development/evaluation query patterns, not general SQL accuracy. Runtime diagnostics remain generated-SQL proxies. Controlled probes do not estimate natural retry recovery; latency includes free-tier pacing. Production TiDB grants, multi-user access and deployment readiness remain separate requirements.",
       stack: [
         "Python",
         "LangGraph",
@@ -303,30 +303,30 @@ export const portfolioContent: PortfolioContent = {
       ],
       evaluation: {
         summary:
-          "The recorded experiment used 10 million Criteo rows split into 7 million training, 1 million validation, and 2 million test observations.",
+          "The project documents a 10-million-row Criteo sample, feature preparation and released model assets. Original training/evaluation outputs have not been recovered, so numerical performance is not claimed.",
         metrics: [
           {
-            label: "XGBoost test AUC",
-            value: "0.9067",
-            context: "Compared with 0.9024 for LightGBM on the recorded split.",
+            label: "Model evaluation",
+            value: "Unresolved",
+            context: "README and dashboard disagree about AUC split labels; original predictions and evaluation outputs are needed.",
             evidenceHref: links.ctrRepository,
           },
           {
-            label: "Top-decile CTR lift",
-            value: "265.6%",
-            context: "Offline ranking analysis, not an online A/B test.",
+            label: "Feature scope",
+            value: "39 → 150",
+            context: "Documented raw-field/model-feature dimensions; serving consistency still needs repair and validation.",
             evidenceHref: links.ctrRepository,
           },
           {
             label: "Dataset",
             value: "10 million",
-            context: "Criteo records using a documented 7M/1M/2M split.",
+            context: "Documented Criteo project sample; original row counts and split provenance were not independently reconstructed.",
             evidenceHref: links.ctrRepository,
           },
         ],
       },
       limitations:
-        "The results are offline academic measurements and do not demonstrate revenue or user impact. Exact reproduction needs the original data split, preprocessing settings, model artifacts, and random seeds.",
+        "Displayed AUC and ranking-lift figures are omitted until original evaluation artifacts are recovered. Serving code contains batch-dependent preprocessing and a missing-indicator defect; their repair must preserve compatibility with frozen model assets. No revenue or user impact is claimed.",
       stack: [
         "Python",
         "XGBoost",
@@ -385,7 +385,7 @@ export const portfolioContent: PortfolioContent = {
     note:
       "I am looking for full-time Applied AI and Machine Learning roles where evaluation and engineering matter.",
     email: "venkateswarsahu000@gmail.com",
-    location: "Yanam, Andhra Pradesh, India",
+    location: "Neelapalli, Andhra Pradesh, India",
     availability: "Open to relocation and remote opportunities",
     links: [
       {
