@@ -288,45 +288,45 @@ export const portfolioContent: PortfolioContent = {
       number: "04",
       title: "CTR Predictor",
       discipline: "Tabular ML · Ranking",
-      period: "Sep–Nov 2025",
+      period: "Sep–Nov 2025 · rebuilt Oct 2026",
       summary:
-        "An academic ML pipeline for training, comparing, and serving click-through-rate models on Criteo display-ad data.",
+        "A Criteo click-prediction prototype with a training-fitted pipeline shared by offline evaluation, Flask and Streamlit.",
       problem:
-        "Sparse numerical and categorical advertising inputs need consistent feature engineering, evaluation, and ranking before they can support useful scoring decisions.",
+        "Sparse numerical and categorical inputs require consistent preprocessing and a separate test sample before their predicted probabilities can support candidate ranking.",
       contribution:
-        "Engineered 150 model features from 39 raw fields, tuned XGBoost and LightGBM with Optuna, compared offline results, and exposed scoring through Flask and Streamlit interfaces.",
+        "Rebuilt historical preprocessing with 123 deterministic features, training-only statistics and fold-excluded target encoding; compared logistic regression, LightGBM and XGBoost, then served the validation-selected LightGBM model.",
       architecture: [
-        "Prepare 13 integer and 26 categorical input fields.",
-        "Generate 150 model features and tune two gradient-boosting models.",
-        "Compare offline AUC, log loss, and ranking lift.",
-        "Serve single and batch scoring through Flask and Streamlit.",
+        "Validate 13 numeric and 26 categorical raw fields.",
+        "Apply training-fitted, batch-independent transforms to 123 features.",
+        "Select models on validation; evaluate a protected test window once.",
+        "Serve probability estimates and candidate rankings through Flask and Streamlit.",
       ],
       evaluation: {
         summary:
-          "The project documents a 10-million-row Criteo sample, feature preparation and released model assets. Original training/evaluation outputs have not been recovered, so numerical performance is not claimed.",
+          "The October 2026 rebuild retained 599,971 training, 149,994 validation and 249,987 test rows after exact feature-duplicate filtering. The test window is beyond the historical 10-million-row prefix; its labels did not fit preprocessing or select models.",
         metrics: [
           {
-            label: "Model evaluation",
-            value: "Unresolved",
-            context: "README and dashboard disagree about AUC split labels; original predictions and evaluation outputs are needed.",
-            evidenceHref: links.ctrRepository,
+            label: "Test ROC AUC",
+            value: "0.7605",
+            context: "249,987 held-out rows; 95% row-bootstrap interval 0.7587–0.7624. AUC is not accuracy.",
+            evidenceHref: links.ctrRepository + "/blob/codex/ctr-evidence-repair/evidence/benchmark.json",
           },
           {
-            label: "Feature scope",
-            value: "39 → 150",
-            context: "Documented raw-field/model-feature dimensions; serving consistency still needs repair and validation.",
-            evidenceHref: links.ctrRepository,
+            label: "Test log loss",
+            value: "0.4857",
+            context: "Validation-selected LightGBM; naive and logistic baselines, calibration and raw predictions are saved with the protocol.",
+            evidenceHref: links.ctrRepository + "/blob/codex/ctr-evidence-repair/evidence/benchmark.json",
           },
           {
-            label: "Dataset",
-            value: "10 million",
-            context: "Documented Criteo project sample; original row counts and split provenance were not independently reconstructed.",
-            evidenceHref: links.ctrRepository,
+            label: "Warm local inference",
+            value: "184 ms",
+            context: "Median for one raw row, 30 warmed repetitions; preprocessing included, loading/network/concurrency excluded.",
+            evidenceHref: links.ctrRepository + "/blob/codex/ctr-evidence-repair/evidence/benchmark.json",
           },
         ],
       },
       limitations:
-        "Displayed AUC and ranking-lift figures are omitted until original evaluation artifacts are recovered. Serving code contains batch-dependent preprocessing and a missing-indicator defect; their repair must preserve compatibility with frozen model assets. No revenue or user impact is claimed.",
+        "A bounded sample study, not a full-dataset result or production SLA. Row order is not a verified timestamp, hashing has collisions, and row-bootstrap intervals omit advertiser/time clustering. Offline top-decile enrichment does not establish causal CTR, revenue or live ranking impact. Historical v1 scores are invalid as clean baselines. The v2 repair is awaiting PR merge; the live demo may still serve the historical revision.",
       stack: [
         "Python",
         "XGBoost",
@@ -371,13 +371,6 @@ export const portfolioContent: PortfolioContent = {
       organization: "Lovely Professional University",
       detail:
         "Completed the Data Science and Data Engineering specialization with a CGPA of 8.38/10.",
-    },
-    {
-      period: "Mar 2024–May 2026",
-      title: "Seed money project lead",
-      organization: "University startup evaluation",
-      detail:
-        "Secured INR 100,000 in university seed funding after presenting the concept, implementation roadmap, and budget to an academic panel.",
     },
   ],
   contact: {
