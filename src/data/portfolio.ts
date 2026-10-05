@@ -309,24 +309,24 @@ export const portfolioContent: PortfolioContent = {
             label: "Test ROC AUC",
             value: "0.7605",
             context: "249,987 held-out rows; 95% row-bootstrap interval 0.7587–0.7624. AUC is not accuracy.",
-            evidenceHref: links.ctrRepository + "/blob/codex/ctr-evidence-repair/evidence/benchmark.json",
+            evidenceHref: links.ctrRepository + "/blob/main/evidence/benchmark.json",
           },
           {
             label: "Test log loss",
             value: "0.4857",
             context: "Validation-selected LightGBM; naive and logistic baselines, calibration and raw predictions are saved with the protocol.",
-            evidenceHref: links.ctrRepository + "/blob/codex/ctr-evidence-repair/evidence/benchmark.json",
+            evidenceHref: links.ctrRepository + "/blob/main/evidence/benchmark.json",
           },
           {
             label: "Warm local inference",
             value: "184 ms",
             context: "Median for one raw row, 30 warmed repetitions; preprocessing included, loading/network/concurrency excluded.",
-            evidenceHref: links.ctrRepository + "/blob/codex/ctr-evidence-repair/evidence/benchmark.json",
+            evidenceHref: links.ctrRepository + "/blob/main/evidence/benchmark.json",
           },
         ],
       },
       limitations:
-        "A bounded sample study, not a full-dataset result or production SLA. Row order is not a verified timestamp, hashing has collisions, and row-bootstrap intervals omit advertiser/time clustering. Offline top-decile enrichment does not establish causal CTR, revenue or live ranking impact. Historical v1 scores are invalid as clean baselines. The v2 repair is awaiting PR merge; the live demo may still serve the historical revision.",
+        "A bounded sample study, not a full-dataset result or production SLA. Row order is not a verified timestamp, hashing has collisions, and row-bootstrap intervals omit advertiser/time clustering. Offline top-decile enrichment does not establish causal CTR, revenue or live ranking impact. Historical v1 scores are invalid as clean baselines.",
       stack: [
         "Python",
         "XGBoost",
